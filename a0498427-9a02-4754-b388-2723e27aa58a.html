@@ -1,0 +1,840 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+    <base target="_self">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>GhostLine Security – Kiberbiztonsági Megoldások</title>
+
+    <meta name="description"
+          content="A GhostLine Security kiberbiztonsági megoldásokat, digitális biztonsági tanácsadást és incidensvizsgálatot kínál.">
+
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <link rel="stylesheet"
+          href="https://use.fontawesome.com/releases/v5.15.4/css/all.css">
+
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap"
+          rel="stylesheet">
+
+    <style>
+        :root {
+            --ghost-cyan: #22d3ee;
+            --ghost-emerald: #10b981;
+            --ghost-dark: #020617;
+        }
+
+        body {
+            font-family: "Inter", ui-sans-serif, system-ui, sans-serif;
+        }
+
+        h1, h2, h3 {
+            font-family: "Space Grotesk", "Inter", sans-serif;
+        }
+
+        section[id] {
+            scroll-margin-top: 96px;
+        }
+
+        ::selection {
+            background: rgba(34, 211, 238, 0.3);
+        }
+
+        /* ===== MODAL ===== */
+
+        #service-modal {
+            opacity: 0;
+            visibility: hidden;
+            pointer-events: none;
+            transition:
+                opacity 0.25s ease,
+                visibility 0.25s ease;
+        }
+
+        #service-modal.active {
+            opacity: 1;
+            visibility: visible;
+            pointer-events: auto;
+        }
+
+        #service-modal-content {
+            transform: translateY(20px) scale(0.97);
+            transition: transform 0.25s ease;
+        }
+
+        #service-modal.active #service-modal-content {
+            transform: translateY(0) scale(1);
+        }
+
+        body.modal-open {
+            overflow: hidden;
+        }
+
+        .service-card {
+            cursor: pointer;
+        }
+    </style>
+</head>
+
+<body class="bg-slate-950 text-slate-300 antialiased">
+
+<!-- =========================================================
+     FEJLÉC
+========================================================= -->
+
+<header class="fixed inset-x-0 top-0 z-50 border-b border-slate-800/60 bg-slate-950/80 backdrop-blur-md">
+
+    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+
+        <div class="flex h-16 items-center justify-between md:h-20">
+
+            <a href="#top"
+               class="flex items-center gap-2"
+               aria-label="GhostLine Security – főoldal">
+
+                <span class="flex h-9 w-9 items-center justify-center rounded-lg bg-gradient-to-br from-cyan-400 to-emerald-500 text-slate-950">
+                    <i class="fas fa-ghost"></i>
+                </span>
+
+                <span class="text-xl font-bold tracking-tight text-white">
+                    GhostLine<span class="text-cyan-400">Security</span>
+                </span>
+
+            </a>
+
+            <nav aria-label="Fő navigáció" class="hidden md:block">
+                <ul id="nav-list"
+                    class="flex items-center gap-8 text-sm font-medium">
+                </ul>
+            </nav>
+
+            <a href="#kapcsolat"
+               class="hidden items-center gap-2 rounded-lg bg-cyan-400 px-4 py-2 text-sm font-semibold text-slate-950 transition hover:bg-cyan-300 md:inline-flex">
+
+                Kapcsolat
+                <i class="fas fa-arrow-right text-xs"></i>
+
+            </a>
+
+            <button id="menu-toggle"
+                    class="p-2 text-slate-300 transition hover:text-cyan-400 md:hidden"
+                    aria-label="Menü megnyitása"
+                    aria-expanded="false"
+                    aria-controls="mobile-menu">
+
+                <i class="fas fa-bars text-xl"></i>
+
+            </button>
+
+        </div>
+
+    </div>
+
+    <div id="mobile-menu"
+         class="hidden border-t border-slate-800 bg-slate-950/95 px-4 py-4 md:hidden">
+
+        <ul id="mobile-nav-list"
+            class="flex flex-col gap-4 text-sm font-medium">
+        </ul>
+
+        <a href="#kapcsolat"
+           class="mt-5 inline-flex items-center gap-2 rounded-lg bg-cyan-400 px-4 py-2 text-sm font-semibold text-slate-950 transition hover:bg-cyan-300">
+
+            Kapcsolat
+            <i class="fas fa-arrow-right text-xs"></i>
+
+        </a>
+
+    </div>
+
+</header>
+
+
+<main id="top">
+
+<!-- =========================================================
+     HERO
+========================================================= -->
+
+<section class="relative overflow-hidden pb-16 pt-28 md:pb-24 md:pt-40">
+
+    <div class="absolute inset-0 bg-cover bg-center opacity-15"
+         style="background-image:url('https://picsum.photos/1920/1080?random=1')"
+         aria-hidden="true">
+    </div>
+
+    <div class="absolute inset-0 bg-gradient-to-b from-slate-950/70 via-slate-950/85 to-slate-950"
+         aria-hidden="true">
+    </div>
+
+    <div class="relative mx-auto max-w-7xl px-4 text-center sm:px-6 lg:px-8">
+
+        <div class="mx-auto mb-6 inline-flex items-center gap-2 rounded-full border border-cyan-800/40 bg-cyan-950/30 px-4 py-1.5 text-xs font-medium tracking-wider text-cyan-300 uppercase">
+            <i class="fas fa-shield-halved"></i>
+            Vállalati szintű védelem
+        </div>
+
+        <h1 class="mx-auto max-w-4xl text-4xl font-bold leading-tight tracking-tight text-white sm:text-5xl md:text-6xl">
+            Digitális világod
+            <span class="bg-gradient-to-r from-cyan-400 to-emerald-400 bg-clip-text text-transparent">biztonságban</span>
+        </h1>
+
+        <p class="mx-auto mt-6 max-w-2xl text-base leading-relaxed text-slate-400 sm:text-lg">
+            A GhostLine Security átfogó kiberbiztonsági megoldásokat kínál – 
+            a megelőzéstől az incidenskezelésig. Védjük meg digitális 
+            infrastruktúrádat a modern fenyegetésekkel szemben.
+        </p>
+
+        <div class="mt-10 flex flex-wrap items-center justify-center gap-4">
+
+            <a href="#szolgaltatasok"
+               class="inline-flex items-center gap-2 rounded-lg bg-cyan-400 px-6 py-3 text-sm font-semibold text-slate-950 transition hover:bg-cyan-300 shadow-lg shadow-cyan-400/20">
+
+                Szolgáltatásaink
+                <i class="fas fa-arrow-down text-xs"></i>
+
+            </a>
+
+            <a href="#kapcsolat"
+               class="inline-flex items-center gap-2 rounded-lg border border-slate-700 px-6 py-3 text-sm font-medium text-slate-300 transition hover:border-cyan-700 hover:text-white">
+
+                Ingyenes konzultáció
+                <i class="fas fa-arrow-right text-xs"></i>
+
+            </a>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =========================================================
+     SZOLGÁLTATÁSOK
+========================================================= -->
+
+<section id="szolgaltatasok" class="py-16 md:py-24">
+
+    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+
+        <div class="mx-auto max-w-2xl text-center">
+
+            <span class="mb-2 inline-block text-xs font-semibold tracking-widest text-cyan-400 uppercase">
+                Szolgáltatások
+            </span>
+
+            <h2 class="text-3xl font-bold text-white sm:text-4xl">
+                Amit kínálunk
+            </h2>
+
+            <p class="mt-4 text-slate-400">
+                Modern vállalkozások számára tervezett, 
+                bizonyított biztonsági megoldások.
+            </p>
+
+        </div>
+
+        <div id="card-grid"
+             class="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =========================================================
+     STATISZTIKÁK
+========================================================= -->
+
+<section class="border-y border-slate-800/60 py-16">
+
+    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+
+        <div id="stats-grid"
+             class="grid gap-8 sm:grid-cols-2 lg:grid-cols-4">
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =========================================================
+     RÓLUNK
+========================================================= -->
+
+<section id="rolunk" class="py-16 md:py-24">
+
+    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+
+        <div class="items-center gap-16 lg:flex">
+
+            <div class="mb-10 lg:mb-0 lg:w-1/2">
+
+                <span class="mb-2 inline-block text-xs font-semibold tracking-widest text-cyan-400 uppercase">
+                    Rólunk
+                </span>
+
+                <h2 class="text-3xl font-bold text-white sm:text-4xl">
+                    Kiberbiztonsági szakértelem,<br>
+                    <span class="text-cyan-400">emberi hozzáállás</span>
+                </h2>
+
+                <p class="mt-6 leading-relaxed text-slate-400">
+                    A GhostLine Security csapata évek óta segíti a 
+                    szervezeteket abban, hogy biztonságosan navigáljanak 
+                    a digitális térben. Hiszünk abban, hogy a hatékony 
+                    védelem nem csak technológia kérdése – megértjük 
+                    az üzleti folyamatokat és az emberi tényezőt is.
+                </p>
+
+                <div class="mt-8 space-y-4">
+
+                    <div class="flex items-start gap-3">
+
+                        <i class="fas fa-check-circle mt-0.5 text-cyan-400"></i>
+
+                        <div>
+                            <h3 class="font-semibold text-white">Fejlett technológia</h3>
+                            <p class="text-sm text-slate-500">AI-alapú fenyegetésészlelés és valós idejű monitorozás</p>
+                        </div>
+
+                    </div>
+
+                    <div class="flex items-start gap-3">
+
+                        <i class="fas fa-check-circle mt-0.5 text-cyan-400"></i>
+
+                        <div>
+                            <h3 class="font-semibold text-white">Tapasztalt csapat</h3>
+                            <p class="text-sm text-slate-500">Nemzetközi minősítésekkel rendelkező szakemberek</p>
+                        </div>
+
+                    </div>
+
+                    <div class="flex items-start gap-3">
+
+                        <i class="fas fa-check-circle mt-0.5 text-cyan-400"></i>
+
+                        <div>
+                            <h3 class="font-semibold text-white">Testreszabott megoldások</h3>
+                            <p class="text-sm text-slate-500">Minden ügyfél egyedi igényeire szabott védelmi stratégia</p>
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            <div class="lg:w-1/2">
+
+                <div class="overflow-hidden rounded-2xl border border-slate-800">
+                    <img src="https://picsum.photos/600/400?random=2"
+                         alt="GhostLine Security csapata egy modern irodában"
+                         loading="lazy"
+                         class="h-full w-full object-cover">
+                </div>
+
+                <div class="-mt-10 ml-6 inline-flex items-center gap-3 rounded-xl border border-slate-800 bg-slate-950 px-5 py-3 shadow-xl">
+
+                    <div class="flex -space-x-2">
+
+                        <img src="https://picsum.photos/40?random=3"
+                             alt="Csapattag 1"
+                             loading="lazy"
+                             class="h-9 w-9 rounded-full border-2 border-slate-950">
+
+                        <img src="https://picsum.photos/40?random=4"
+                             alt="Csapattag 2"
+                             loading="lazy"
+                             class="h-9 w-9 rounded-full border-2 border-slate-950">
+
+                        <img src="https://picsum.photos/40?random=5"
+                             alt="Csapattag 3"
+                             loading="lazy"
+                             class="h-9 w-9 rounded-full border-2 border-slate-950">
+
+                    </div>
+
+                    <span class="text-sm font-medium text-white">20+ szakértő</span>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =========================================================
+     VÉLEMÉNYEK
+========================================================= -->
+
+<section class="border-y border-slate-800/60 py-16">
+
+    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+
+        <div class="mx-auto max-w-2xl text-center">
+
+            <span class="mb-2 inline-block text-xs font-semibold tracking-widest text-cyan-400 uppercase">
+                Vélemények
+            </span>
+
+            <h2 class="text-3xl font-bold text-white sm:text-4xl">
+                Ügyfeleink mondták
+            </h2>
+
+        </div>
+
+        <div id="testimonial-grid"
+             class="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =========================================================
+     KAPCSOLAT
+========================================================= -->
+
+<section id="kapcsolat" class="py-16 md:py-24">
+
+    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+
+        <div class="mx-auto max-w-2xl text-center">
+
+            <span class="mb-2 inline-block text-xs font-semibold tracking-widest text-cyan-400 uppercase">
+                Kapcsolat
+            </span>
+
+            <h2 class="text-3xl font-bold text-white sm:text-4xl">
+                Vegye fel velünk a kapcsolatot
+            </h2>
+
+            <p class="mt-4 text-slate-400">
+                Készen áll a biztonság növelésére? 
+                Küldjön üzenetet és csapatunk 24 órán belül válaszol.
+            </p>
+
+        </div>
+
+        <div class="mx-auto mt-12 max-w-2xl">
+
+            <form id="contact-form" novalidate>
+
+                <div class="grid gap-6 sm:grid-cols-2">
+
+                    <div>
+                        <label for="contact-name" class="mb-1.5 block text-sm font-medium text-slate-300">
+                            Név
+                        </label>
+                        <input type="text" id="contact-name" required
+                               class="w-full rounded-lg border border-slate-700 bg-slate-900 px-4 py-2.5 text-sm text-white placeholder-slate-500 outline-none transition focus:border-cyan-500 focus:ring-2 focus:ring-cyan-500/20"
+                               placeholder="Teljes név">
+                    </div>
+
+                    <div>
+                        <label for="contact-email" class="mb-1.5 block text-sm font-medium text-slate-300">
+                            Email
+                        </label>
+                        <input type="email" id="contact-email" required
+                               class="w-full rounded-lg border border-slate-700 bg-slate-900 px-4 py-2.5 text-sm text-white placeholder-slate-500 outline-none transition focus:border-cyan-500 focus:ring-2 focus:ring-cyan-500/20"
+                               placeholder="email@example.com">
+                    </div>
+
+                </div>
+
+                <div class="mt-5">
+                    <label for="contact-message" class="mb-1.5 block text-sm font-medium text-slate-300">
+                        Üzenet
+                    </label>
+                    <textarea id="contact-message" rows="4" required
+                              class="w-full rounded-lg border border-slate-700 bg-slate-900 px-4 py-2.5 text-sm text-white placeholder-slate-500 outline-none transition focus:border-cyan-500 focus:ring-2 focus:ring-cyan-500/20 resize-y"
+                              placeholder="Írja le igényeit..."></textarea>
+                </div>
+
+                <button type="submit"
+                        class="mt-6 inline-flex w-full items-center justify-center gap-2 rounded-lg bg-cyan-400 px-6 py-3 text-sm font-semibold text-slate-950 transition hover:bg-cyan-300 shadow-lg shadow-cyan-400/20">
+
+                    Üzenet küldése
+                    <i class="fas fa-paper-plane text-xs"></i>
+
+                </button>
+
+                <p id="form-feedback" class="mt-4 text-center text-sm"></p>
+
+            </form>
+
+        </div>
+
+    </div>
+
+</section>
+
+</main>
+
+
+<!-- =========================================================
+     LÁBLÉC
+========================================================= -->
+
+<footer class="border-t border-slate-800/60 py-12">
+
+    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+
+        <div class="flex flex-col items-center justify-between gap-6 md:flex-row">
+
+            <a href="#top"
+               class="flex items-center gap-2"
+               aria-label="GhostLine Security – főoldal">
+
+                <span class="flex h-8 w-8 items-center justify-center rounded-lg bg-gradient-to-br from-cyan-400 to-emerald-500 text-slate-950 text-sm">
+                    <i class="fas fa-ghost"></i>
+                </span>
+
+                <span class="text-base font-bold tracking-tight text-white">
+                    GhostLine<span class="text-cyan-400">Security</span>
+                </span>
+
+            </a>
+
+            <ul id="footer-links"
+                class="flex flex-wrap justify-center gap-6 text-sm text-slate-500">
+            </ul>
+
+            <p class="text-xs text-slate-600">
+                &copy; 2025 GhostLine Security. Minden jog fenntartva.
+            </p>
+
+        </div>
+
+    </div>
+
+</footer>
+
+
+<!-- =========================================================
+     SZOLGÁLTATÁS MODÁLIS
+========================================================= -->
+
+<div id="service-modal"
+     class="fixed inset-0 z-[100] flex items-center justify-center bg-black/70 px-4"
+     role="dialog"
+     aria-modal="true"
+     aria-labelledby="modal-title">
+
+    <div id="service-modal-content"
+         class="relative max-h-[80vh] w-full max-w-lg overflow-y-auto rounded-2xl border border-slate-700 bg-slate-900 p-6 shadow-2xl sm:p-8">
+
+        <button id="modal-close"
+                class="absolute right-4 top-4 flex h-8 w-8 items-center justify-center rounded-full bg-slate-800 text-slate-400 transition hover:bg-slate-700 hover:text-white"
+                aria-label="Modális bezárása">
+
+            <i class="fas fa-times"></i>
+
+        </button>
+
+        <div id="modal-icon" class="mb-4 flex h-12 w-12 items-center justify-center rounded-xl bg-gradient-to-br from-cyan-400/20 to-emerald-400/20 text-2xl text-cyan-400">
+        </div>
+
+        <h3 id="modal-title" class="text-2xl font-bold text-white">
+        </h3>
+
+        <p id="modal-text" class="mt-4 leading-relaxed text-slate-400">
+        </p>
+
+        <ul id="modal-details" class="mt-6 space-y-2 text-sm">
+        </ul>
+
+        <a href="#kapcsolat"
+           class="mt-6 inline-flex w-full items-center justify-center gap-2 rounded-lg bg-cyan-400 px-5 py-2.5 text-sm font-semibold text-slate-950 transition hover:bg-cyan-300">
+
+            Érdeklődöm
+            <i class="fas fa-arrow-right text-xs"></i>
+
+        </a>
+
+    </div>
+
+</div>
+
+
+<!-- =========================================================
+     JAVASCRIPT
+========================================================= -->
+
+<script>
+    // =========================================================
+    // DATA LAYER
+    // =========================================================
+
+    const navItems = [
+        { label: "Szolgáltatások",   href: "#szolgaltatasok" },
+        { label: "Rólunk",           href: "#rolunk"         },
+        { label: "Vélemények",      href: "#velemenyek"     },
+        { label: "Kapcsolat",       href: "#kapcsolat"      },
+    ];
+
+    const services = [
+        {
+            icon: "fa-shield-halved",
+            title: "Biztonsági audit",
+            brief: "Teljes körű infrastruktúra-felmérés és sebezhetőségi elemzés.",
+            full:  "Részletesen feltárjuk a hálózat, az alkalmazások és a fizikai hozzáférés gyengeségeit. Ajánlásainkkal csökkentheti a támadási felületet.",
+            details: ["OWASP Top 10 vizsgálat", "Hálózati penetrációs teszt", "Fizikai biztonság ellenőrzése"]
+        },
+        {
+            icon: "fa-bug-slash",
+            title: "Incidenskezelés",
+            brief: "Gyors reagálás, digitális törvényszéki vizsgálat és helyreállítás.",
+            full:  "Ha megtörtént a baj, gyorsan lépünk. Törvényszéki eljárással feltárjuk a támadás forrását, és javaslatot teszünk a helyreállításra.",
+            details: ["Forensic analízis", "Malware eltávolítás", "Biztonsági mentés helyreállítása"]
+        },
+        {
+            icon: "fa-user-lock",
+            title: "Biztonságtudatosság",
+            brief: "Oktatás és szimuláció a munkavállalók védelmi készségeinek fejlesztésére.",
+            full:  "Az emberi hiba a leggyakoribb biztonsági rés. Gyakorlati képzésekkel és szimulált adathalász tesztekkel növeljük a munkatársak éberségét.",
+            details: ["Phishing szimuláció", "Biztonsági irányelvek oktatása", "Rendes képzési programok"]
+        },
+        {
+            icon: "fa-cloud",
+            title: "Felhőbiztonság",
+            brief: "Felhő infrastruktúra védelme, identitáskezelés és adatvédelem.",
+            full:  "Azure, AWS és Google Cloud környezetek biztonságossá tétele. IAM szabályzatok finomhangolása és folyamatos monitorozás.",
+            details: ["Felhő konfigurációs audit", "IAM házirendek", "Adatvesztés-megelőzés"]
+        },
+        {
+            icon: "fa-code",
+            title: "Alkalmazásbiztonság",
+            brief: "Biztonságos fejlesztési életciklus (SSDLC) és kódvizsgálat.",
+            full:  "Szoftverei biztonságának garantálása a tervezéstől a telepítésig. Statikus és dinamikus kódelemzés, CI/CD integráció.",
+            details: ["SAST / DAST vizsgálatok", "Biztonságos kódolási irányelvek", "DevSecOps integráció"]
+        },
+        {
+            icon: "fa-network-wired",
+            title: "Hálózatvédelem",
+            brief: "Tűzfal konfiguráció, IDS/IPS és hálózati szegmentálás.",
+            full:  "Hálózati infrastruktúra megerősítése, forgalomelemzés és behatolásérzékelő rendszerek telepítése a külső és belső fenyegetések ellen.",
+            details: ["Tűzfal hardening", "IDS/IPS beállítás", "Zero Trust szegmentálás"]
+        }
+    ];
+
+    const stats = [
+        { value: "150+", label: "Védett szervezet" },
+        { value: "99.7%", label: "Megelőzési arány" },
+        { value: "12+", label: "Év tapasztalat" },
+        { value: "24/7", label: "Támogatás" }
+    ];
+
+    const testimonials = [
+        {
+            text: "Az audit után teljesen átalakítottuk a biztonsági stratégiánkat. Azóta sem ért minket támadás.",
+            name: "Kovács Péter",
+            role: "IT igazgató, NetStar Kft."
+        },
+        {
+            text: "Professzionális csapat, gyors reagálás. Az incidenskezelésük példaértékű volt.",
+            name: "Nagy Mária",
+            role: "CEO, SecureTech Zrt."
+        },
+        {
+            text: "A képzési programjuk radikálisan csökkentette az adathalász támadások sikerarányát.",
+            name: "Szabó Gábor",
+            role: "HR vezető, Digitália Kft."
+        }
+    ];
+
+    const footerLinks = [
+        { label: "Adatvédelem", href: "#" },
+        { label: "ÁSZF", href: "#" },
+        { label: "LinkedIn", href: "#" },
+        { label: "Email", href: "#" }
+    ];
+
+
+    // =========================================================
+    // RENDER FUNCTIONS
+    // =========================================================
+
+    function renderNav(items) {
+        return items.map(function(i) {
+            return "<li><a href=\"" + i.href + "\" class=\"transition hover:text-cyan-400\">" + i.label + "</a></li>";
+        }).join("");
+    }
+
+    function renderCards(items) {
+        return items.map(function(s, idx) {
+            return "\
+                <article class=\"service-card group relative overflow-hidden rounded-2xl border border-slate-800 bg-slate-900/60 p-6 transition hover:border-cyan-700 hover:shadow-lg hover:shadow-cyan-900/10\" data-index=\"" + idx + "\">\
+                    <div class=\"mb-4 flex h-12 w-12 items-center justify-center rounded-xl bg-gradient-to-br from-cyan-400/20 to-emerald-400/20 text-2xl text-cyan-400\">\
+                        <i class=\"fas " + s.icon + "\"></i>\
+                    </div>\
+                    <h3 class=\"mb-2 text-lg font-bold text-white\">" + s.title + "</h3>\
+                    <p class=\"text-sm leading-relaxed text-slate-400\">" + s.brief + "</p>\
+                    <span class=\"mt-4 inline-flex items-center gap-1 text-xs font-medium text-cyan-400\">\
+                        Részletek <i class=\"fas fa-arrow-right text-[10px]\"></i>\
+                    </span>\
+                </article>\
+            ";
+        }).join("");
+    }
+
+    function renderStats(items) {
+        return items.map(function(s) {
+            return "\
+                <div class=\"text-center\">\
+                    <span class=\"block text-3xl font-bold text-white sm:text-4xl\">" + s.value + "</span>\
+                    <span class=\"mt-1 block text-sm text-slate-500\">" + s.label + "</span>\
+                </div>\
+            ";
+        }).join("");
+    }
+
+    function renderTestimonials(items) {
+        return items.map(function(t) {
+            return "\
+                <article class=\"rounded-2xl border border-slate-800 bg-slate-900/60 p-6\">\
+                    <div class=\"flex items-center gap-0.5 text-cyan-400\">\
+                        <i class=\"fas fa-star text-xs\"></i>\
+                        <i class=\"fas fa-star text-xs\"></i>\
+                        <i class=\"fas fa-star text-xs\"></i>\
+                        <i class=\"fas fa-star text-xs\"></i>\
+                        <i class=\"fas fa-star text-xs\"></i>\
+                    </div>\
+                    <p class=\"mt-4 text-sm leading-relaxed text-slate-400\">\"" + t.text + "\"</p>\
+                    <div class=\"mt-6 border-t border-slate-800/60 pt-4\">\
+                        <span class=\"block text-sm font-semibold text-white\">" + t.name + "</span>\
+                        <span class=\"block text-xs text-slate-500\">" + t.role + "</span>\
+                    </div>\
+                </article>\
+            ";
+        }).join("");
+    }
+
+    function renderFooterLinks(items) {
+        return items.map(function(l) {
+            return "<li><a href=\"" + l.href + "\" class=\"transition hover:text-cyan-400\">" + l.label + "</a></li>";
+        }).join("");
+    }
+
+
+    // =========================================================
+    // MOUNT
+    // =========================================================
+
+    document.getElementById("nav-list").innerHTML         = renderNav(navItems);
+    document.getElementById("mobile-nav-list").innerHTML  = renderNav(navItems);
+    document.getElementById("card-grid").innerHTML        = renderCards(services);
+    document.getElementById("stats-grid").innerHTML       = renderStats(stats);
+    document.getElementById("testimonial-grid").innerHTML = renderTestimonials(testimonials);
+    document.getElementById("footer-links").innerHTML     = renderFooterLinks(footerLinks);
+
+
+    // =========================================================
+    // EVENT DELEGATION (anchor scrolling + modális + menü + form)
+    // =========================================================
+
+    document.addEventListener("click", function(e) {
+
+        // --- Smooth scroll for anchor links ---
+        var link = e.target.closest("a[href^='#']");
+        if (link && link.getAttribute("href") !== "#") {
+            e.preventDefault();
+            var target = document.querySelector(link.getAttribute("href"));
+            if (target) {
+                target.scrollIntoView({ behavior: "smooth" });
+            }
+            // Close mobile menu if open
+            var mm = document.getElementById("mobile-menu");
+            if (mm && !mm.classList.contains("hidden")) {
+                mm.classList.add("hidden");
+            }
+        }
+
+        // --- Service card click: open modal ---
+        var card = e.target.closest(".service-card");
+        if (card) {
+            var idx = parseInt(card.getAttribute("data-index"), 10);
+            var svc = services[idx];
+            if (!svc) return;
+            document.getElementById("modal-icon").innerHTML = "<i class=\"fas " + svc.icon + "\"></i>";
+            document.getElementById("modal-title").textContent = svc.title;
+            document.getElementById("modal-text").textContent = svc.full;
+            var listHtml = svc.details.map(function(d) {
+                return "<li class=\"flex items-start gap-2 text-sm text-slate-400\"><i class=\"fas fa-check mt-0.5 text-cyan-400 text-xs\"></i>" + d + "</li>";
+            }).join("");
+            document.getElementById("modal-details").innerHTML = listHtml;
+            document.getElementById("service-modal").classList.add("active");
+            document.body.classList.add("modal-open");
+        }
+
+    });
+
+
+    // --- Modal close ---
+    document.getElementById("modal-close").addEventListener("click", function() {
+        document.getElementById("service-modal").classList.remove("active");
+        document.body.classList.remove("modal-open");
+    });
+
+    document.getElementById("service-modal").addEventListener("click", function(e) {
+        if (e.target === this) {
+            document.getElementById("service-modal").classList.remove("active");
+            document.body.classList.remove("modal-open");
+        }
+    });
+
+
+    // --- Mobile menu toggle ---
+    document.getElementById("menu-toggle").addEventListener("click", function() {
+        var menu = document.getElementById("mobile-menu");
+        var expanded = this.getAttribute("aria-expanded") === "true";
+        menu.classList.toggle("hidden");
+        this.setAttribute("aria-expanded", String(!expanded));
+    });
+
+
+    // --- Contact form ---
+    document.getElementById("contact-form").addEventListener("submit", function(e) {
+        e.preventDefault();
+        var fb = document.getElementById("form-feedback");
+        var name = document.getElementById("contact-name").value.trim();
+        var email = document.getElementById("contact-email").value.trim();
+        var msg   = document.getElementById("contact-message").value.trim();
+        if (!name || !email || !msg) {
+            fb.innerHTML = "<span class=\"text-red-400\">Kérjük töltse ki az összes mezőt.</span>";
+            return;
+        }
+        fb.innerHTML = "<span class=\"text-cyan-400\">Köszönjük! Üzenetét fogadtuk, munkatársunk hamarosan jelentkezik.</span>";
+        this.reset();
+    });
+
+
+    // =========================================================
+    // ADDITIONAL: keyboard close modal
+    // =========================================================
+
+    document.addEventListener("keydown", function(e) {
+        if (e.key === "Escape") {
+            var modal = document.getElementById("service-modal");
+            if (modal.classList.contains("active")) {
+                modal.classList.remove("active");
+                document.body.classList.remove("modal-open");
+            }
+        }
+    });
+
+</script>
+
+</body>
+</html>
